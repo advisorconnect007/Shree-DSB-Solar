@@ -1,36 +1,43 @@
 import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
-import Services from "./components/Services";
-import Calculator from "./components/Calculator";
-import Pricing from "./components/Pricing";
-import Testimonials from "./components/Testimonials";
-import WhyUs from "./components/WhyUs";
-import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import WhatsApp from "./components/WhatsApp";
-
-function goTo(id) {
-  if (id === "hero") { window.scrollTo({ top: 0, behavior: "smooth" }); return; }
-  const el = document.getElementById(id);
-  if (!el) return;
-  const navH = document.querySelector("nav")?.offsetHeight ?? 68;
-  window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - navH - 8, behavior: "smooth" });
-}
+import ScrollToTop from "./components/ScrollToTop";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import ServicesPage from "./pages/Services";
+import SolarSolutions from "./pages/SolarSolutions";
+import Pricing from "./pages/Pricing";
+import Projects from "./pages/Projects";
+import FAQ from "./pages/FAQ";
+import Blog from "./pages/Blog";
+import Contact from "./pages/Contact";
+import NotFound from "./pages/NotFound";
 
 export default function App() {
   return (
-    <div className="font-inter">
-      <Navbar onNav={goTo} />
-      <Hero onNav={goTo} />
-      <Services onNav={goTo} />
-      <Calculator onNav={goTo} />
-      <Pricing onNav={goTo} />
-      <Testimonials />
-      <WhyUs />
-      <Contact />
-      <Footer onNav={goTo} />
-      <WhatsApp />
-    </div>
+    <Router>
+      <div className="font-inter bg-[#F8FAFC] text-[#0F172A]">
+        <ScrollToTop />
+        <Navbar />
+        <main>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/services" element={<ServicesPage />} />
+            <Route path="/solutions" element={<SolarSolutions />} />
+            <Route path="/pricing" element={<Pricing />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/faq" element={<FAQ />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </main>
+        <Footer />
+        <WhatsApp />
+      </div>
+    </Router>
   );
 }

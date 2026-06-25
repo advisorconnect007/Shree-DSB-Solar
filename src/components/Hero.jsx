@@ -1,99 +1,97 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Zap, Calculator, ChevronDown } from "lucide-react";
-import heroBg from "../assets/hero-solar.jpg";
+import React, { useEffect, useState } from "react";
+import { ArrowRight, CheckCircle2, Phone } from "lucide-react";
+import { Link } from "react-router-dom";
 
-const stats = [
-  { num: 500, suffix: "+", label: "Installations" },
-  { num: null, display: "10yr", label: "Warranty" },
-  { num: 98, suffix: "%", label: "Happy Clients" },
-  { num: null, display: "24/7", label: "Support" },
+const bullets = [
+  "₹78,000 govt subsidy available",
+  "25-year performance warranty",
+  "Free site survey & consultation",
 ];
 
-function CountUp({ target, suffix = "", duration = 1800 }) {
-  const [val, setVal] = useState(0);
-  const started = useRef(false);
-  const ref = useRef(null);
-  useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting && !started.current) {
-        started.current = true;
-        const step = target / (duration / 16);
-        let v = 0;
-        const t = setInterval(() => { v += step; if (v >= target) { v = target; clearInterval(t); } setVal(Math.floor(v)); }, 16);
-      }
-    }, { threshold: 0.5 });
-    if (ref.current) obs.observe(ref.current);
-    return () => obs.disconnect();
-  }, [target, duration]);
-  return <span ref={ref}>{val}{suffix}</span>;
-}
+export default function Hero() {
+  const [loaded, setLoaded] = useState(false);
 
-export default function Hero({ onNav }) {
-  const bgRef = useRef(null);
   useEffect(() => {
-    const handler = () => { if (bgRef.current) bgRef.current.style.transform = `scale(1.1) translateY(${window.scrollY * 0.22}px)`; };
-    window.addEventListener("scroll", handler, { passive: true });
-    return () => window.removeEventListener("scroll", handler);
+    const id = setTimeout(() => setLoaded(true), 80);
+    return () => clearTimeout(id);
   }, []);
 
   return (
-    <section id="hero" className="relative h-screen min-h-[640px] flex items-center overflow-hidden">
-      {/* BG */}
-      <div ref={bgRef} className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${heroBg})`, transform: "scale(1.1)", willChange: "transform" }} />
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[rgba(8,18,38,0.92)] via-[rgba(12,31,63,0.76)] to-[rgba(12,31,63,0.25)]" />
-      {/* Orbs */}
-      <div className="orb absolute w-96 h-96 rounded-full blur-[80px] opacity-20 bg-blue-500 -top-24 right-[10%] pointer-events-none" />
-      <div className="orb2 absolute w-64 h-64 rounded-full blur-[70px] opacity-15 bg-amber-400 bottom-0 right-[35%] pointer-events-none" />
+    <section className="relative min-h-screen bg-[#0F172A] flex items-center overflow-hidden">
+
+      {/* Background image */}
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{
+          backgroundImage:
+            "url('https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1920&q=80')",
+        }}
+      />
+
+      {/* Gradient overlay — strong left, fade right */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[#0F172A] via-[#0F172A]/88 to-[#0F172A]/40" />
+
+      {/* Decorative gold orb */}
+      <div className="orb absolute top-1/4 -right-24 w-96 h-96 rounded-full bg-[#FBBF24]/8 blur-3xl pointer-events-none" />
 
       {/* Content */}
-      <div className="relative z-10 px-6 md:px-[6%] max-w-[700px]">
-        {/* Chip */}
-        <div className="chip-pulse inline-flex items-center gap-2.5 bg-amber-400/15 border border-amber-400/40 text-white/95 text-xs font-bold px-4 py-2 rounded-full mb-6 tracking-widest uppercase" style={{ animationDelay: "200ms", animation: "fadeUp .7s .2s both" }}>
-          <span className="w-2 h-2 bg-amber-400 rounded-full animate-pulse" />
-          Bikaner's #1 Trusted Solar Partner
-        </div>
+      <div className="relative z-10 w-full max-w-[1300px] mx-auto px-6 md:px-10 pt-28 pb-20">
+        <div className={`max-w-2xl transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
 
-        {/* Headline */}
-        <h1 className="text-[clamp(38px,6vw,68px)] font-black text-white leading-[1.04] tracking-[-2px] mb-5" style={{ animation: "fadeUp .75s .38s both" }}>
-          Power Your Home<br />With{" "}
-          <em className="text-amber-300 not-italic">Clean Solar</em><br />
-          Energy ☀️
-        </h1>
+          {/* Badge */}
+          <div className="chip-pulse inline-flex items-center gap-2.5 rounded-full border border-[#FBBF24]/25 bg-[#FBBF24]/12 backdrop-blur-sm px-4 py-2 mb-8">
+            <span className="w-2 h-2 rounded-full bg-[#FBBF24] animate-pulse flex-shrink-0" />
+            <span className="text-[11px] font-bold uppercase tracking-[2.5px] text-[#FBBF24]">
+              India's Most Trusted Solar Energy Partner
+            </span>
+          </div>
 
-        <p className="text-lg text-white/75 leading-relaxed mb-9 max-w-lg" style={{ animation: "fadeUp .75s .55s both" }}>
-          End-to-end solar solutions for homes & businesses across Rajasthan. Save up to <strong className="text-amber-300">₹3,500/month</strong> on electricity.
-        </p>
+          {/* Headline */}
+          <h1
+            className="text-5xl md:text-6xl lg:text-7xl font-black leading-[1.06] tracking-[-0.02em] text-white mb-6"
+            style={{ fontFamily: "Poppins, sans-serif" }}
+          >
+            Power Your Future
+            <br />
+            with <span className="text-[#FBBF24]">Solar Energy</span>
+          </h1>
 
-        <div className="flex flex-wrap gap-3.5 mb-14" style={{ animation: "fadeUp .75s .7s both" }}>
-          <button onClick={() => onNav("contact")} className="btn-gold">
-            <Zap size={17} strokeWidth={2.5} /> Get Free Quote
-          </button>
-          <button onClick={() => onNav("calculator")} className="btn-ghost">
-            <Calculator size={17} strokeWidth={2} /> Calculate Cost
-          </button>
-        </div>
+          {/* Subtext */}
+          <p className="text-lg md:text-xl text-[#CBD5E1] leading-8 mb-8 max-w-lg">
+            Premium solar installations for homes, businesses and industries across Rajasthan.
+            Save up to 90% on your electricity bills.
+          </p>
 
-        {/* Stats */}
-        <div className="grid grid-cols-4 bg-white/8 border border-white/12 rounded-2xl overflow-hidden backdrop-blur-xl max-w-[520px]" style={{ animation: "fadeUp .75s .85s both" }}>
-          {stats.map((s, i) => (
-            <div key={i} className={`py-4 px-2 text-center ${i < 3 ? "border-r border-white/10" : ""}`}>
-              <div className="text-2xl font-black text-amber-300 leading-none">
-                {s.num !== null ? <CountUp target={s.num} suffix={s.suffix} /> : s.display}
-              </div>
-              <div className="text-[10px] text-white/55 mt-1.5 font-medium tracking-wide uppercase">{s.label}</div>
-            </div>
-          ))}
+          {/* Bullet points */}
+          <ul className="space-y-3 mb-10">
+            {bullets.map((b) => (
+              <li key={b} className="flex items-center gap-3 text-[#CBD5E1] text-sm">
+                <CheckCircle2 size={17} className="text-[#FBBF24] flex-shrink-0" />
+                {b}
+              </li>
+            ))}
+          </ul>
+
+          {/* CTA Buttons */}
+          <div className="flex flex-wrap gap-4">
+            <Link
+              to="/contact"
+              className="btn-primary text-sm px-8 py-4 rounded-full shadow-[0_12px_40px_rgba(251,191,36,.45)]"
+            >
+              Get Free Consultation <ArrowRight size={16} />
+            </Link>
+            <a
+              href="tel:+919462982929"
+              className="btn-ghost-white text-sm px-8 py-4 rounded-full"
+            >
+              <Phone size={16} /> +91 94629 82929
+            </a>
+          </div>
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <button onClick={() => onNav("services")} className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 opacity-60 hover:opacity-100 transition-opacity">
-        <span className="text-[10px] text-white tracking-[2px] uppercase font-semibold">Scroll</span>
-        <ChevronDown size={18} className="scroll-dot text-amber-300" />
-      </button>
-
-      <style>{`@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}`}</style>
+      {/* Bottom fade */}
+      <div className="absolute bottom-0 inset-x-0 h-24 bg-gradient-to-t from-[#F8FAFC] to-transparent" />
     </section>
   );
 }

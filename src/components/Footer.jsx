@@ -1,66 +1,124 @@
 import React from "react";
-import { Sun, Phone, MessageCircle, MapPin } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Sun, Phone, Mail, MapPin, Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
 
-const services = ["Solar Installation", "Panel Washing", "Maintenance AMC", "Battery Storage", "Solar Consulting"];
-const quickLinks = [
-  { label: "Price Calculator", id: "calculator" },
-  { label: "Pricing", id: "pricing" },
-  { label: "Reviews", id: "testimonials" },
-  { label: "Why Choose Us", id: "why" },
-  { label: "Get Free Quote", id: "contact" },
+const navLinks = [
+  { label: "Home",     to: "/" },
+  { label: "About",    to: "/about" },
+  { label: "Services", to: "/services" },
+  { label: "Pricing",  to: "/pricing" },
+  { label: "Projects", to: "/projects" },
+  { label: "FAQ",      to: "/faq" },
+  { label: "Blog",     to: "/blog" },
+  { label: "Contact",  to: "/contact" },
 ];
 
-export default function Footer({ onNav }) {
+const socials = [
+  { icon: Facebook,  href: "#", label: "Facebook",  color: "#1877F2" },
+  { icon: Instagram, href: "#", label: "Instagram", color: "#E1306C" },
+  { icon: Linkedin,  href: "#", label: "LinkedIn",  color: "#0A66C2" },
+  { icon: Youtube,   href: "#", label: "YouTube",   color: "#FF0000" },
+];
+
+export default function Footer() {
   return (
-    <footer className="bg-[#0d1e3a] text-white/50 pt-16 pb-7 px-6 md:px-[6%]">
-      <div className="grid md:grid-cols-3 gap-12 mb-12">
+    <footer className="bg-[#0F172A] text-white">
+      <div className="mx-auto max-w-[1300px] px-6 md:px-10 pt-12 pb-8 grid gap-10 md:grid-cols-[1.6fr_1fr_1.2fr]">
+
         {/* Brand */}
         <div>
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center">
-              <Sun size={20} className="text-white" strokeWidth={2.5} />
+          <Link to="/" className="inline-flex items-center gap-3 mb-4 group">
+            <div className="h-10 w-10 rounded-xl bg-[#FBBF24] flex items-center justify-center group-hover:scale-105 transition-transform">
+              <Sun size={18} className="text-[#0F172A]" strokeWidth={2.5} />
             </div>
-            <span className="text-lg font-extrabold text-white tracking-tight">Shree DSB Solar</span>
-          </div>
-          <p className="text-sm leading-[1.85] text-white/40">Bikaner's trusted solar energy partner. Providing clean, affordable solar solutions for over a decade across Rajasthan.</p>
-          <div className="flex flex-col gap-2.5 mt-5">
-            <a href="tel:9462982929" className="text-sm text-white/45 hover:text-blue-300 flex items-center gap-2.5 transition-colors">
-              <Phone size={13} className="text-amber-400 flex-shrink-0" />+91 9462982929
-            </a>
-            <a href="https://wa.me/919462982929" target="_blank" rel="noreferrer" className="text-sm text-white/45 hover:text-blue-300 flex items-center gap-2.5 transition-colors">
-              <MessageCircle size={13} className="text-amber-400 flex-shrink-0" />WhatsApp Us
-            </a>
-            <div className="text-sm text-white/45 flex items-center gap-2.5">
-              <MapPin size={13} className="text-amber-400 flex-shrink-0" />Y67, Sudarshana Nagar, Bikaner 334001
+            <div className="leading-tight">
+              <p className="text-[9px] uppercase tracking-[2px] text-white/40 font-semibold">DSB Solar</p>
+              <p className="text-[15px] font-bold" style={{ fontFamily: "Poppins, sans-serif" }}>Premium Solar</p>
             </div>
+          </Link>
+
+          <p className="text-sm text-white/50 leading-6 mb-5 max-w-[260px]">
+            Premium solar installations for homes, businesses and industries across Rajasthan.
+          </p>
+
+          <div className="flex items-center gap-2.5">
+            {socials.map(({ icon: Icon, href, label, color }) => (
+              <a
+                key={label}
+                href={href}
+                aria-label={label}
+                className="w-8 h-8 rounded-lg bg-white/8 border border-white/10 flex items-center justify-center text-white/55 transition-all duration-200"
+                style={{ "--brand": color }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.background = color;
+                  e.currentTarget.style.borderColor = color;
+                  e.currentTarget.style.color = "#fff";
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.background = "";
+                  e.currentTarget.style.borderColor = "";
+                  e.currentTarget.style.color = "";
+                }}
+              >
+                <Icon size={14} />
+              </a>
+            ))}
           </div>
         </div>
 
-        {/* Services */}
+        {/* Links — 2-column grid */}
         <div>
-          <h4 className="text-[11px] font-bold uppercase tracking-[2px] text-white/75 mb-5">Services</h4>
-          <ul className="space-y-2.5">
-            {services.map((s) => (
-              <li key={s}><button onClick={() => onNav("services")} className="text-sm text-white/40 hover:text-white/90 transition-colors block">{s}</button></li>
+          <p className="text-[10px] uppercase tracking-[2.5px] text-[#FBBF24] font-bold mb-4">Quick Links</p>
+          <ul className="grid grid-cols-2 gap-x-4 gap-y-2.5">
+            {navLinks.map(({ label, to }) => (
+              <li key={to}>
+                <Link
+                  to={to}
+                  className="text-sm text-white/50 hover:text-white transition-colors"
+                >
+                  {label}
+                </Link>
+              </li>
             ))}
           </ul>
         </div>
 
-        {/* Quick Links */}
+        {/* Contact */}
         <div>
-          <h4 className="text-[11px] font-bold uppercase tracking-[2px] text-white/75 mb-5">Quick Links</h4>
-          <ul className="space-y-2.5">
-            {quickLinks.map(({ label, id }) => (
-              <li key={id}><button onClick={() => onNav(id)} className="text-sm text-white/40 hover:text-white/90 transition-colors block">{label}</button></li>
-            ))}
-            <li><a href="tel:9462982929" className="text-sm text-white/40 hover:text-white/90 transition-colors block">Call Us Now</a></li>
+          <p className="text-[10px] uppercase tracking-[2.5px] text-[#FBBF24] font-bold mb-4">Contact</p>
+          <ul className="space-y-3 text-sm text-white/55">
+            <li>
+              <a href="tel:+919462982929" className="flex items-center gap-2.5 hover:text-white transition-colors">
+                <Phone size={13} className="text-[#FBBF24] flex-shrink-0" />
+                +91 94629 82929
+              </a>
+            </li>
+            <li>
+              <a href="mailto:hello@dsbsolar.com" className="flex items-center gap-2.5 hover:text-white transition-colors">
+                <Mail size={13} className="text-[#FBBF24] flex-shrink-0" />
+                hello@dsbsolar.com
+              </a>
+            </li>
+            <li className="flex items-start gap-2.5">
+              <MapPin size={13} className="text-[#FBBF24] flex-shrink-0 mt-0.5" />
+              <span className="leading-5">Y67, Sudarshana Nagar,<br />Bikaner, Rajasthan 334001</span>
+            </li>
+            <li className="text-white/35 text-xs pt-1">
+              {/* Mon–Sat: 9 AM – 7 PM &nbsp;|&nbsp; Sun: By appointment */}
+            </li>
           </ul>
         </div>
       </div>
 
-      <div className="border-t border-white/6 pt-6 flex flex-wrap justify-between gap-3 text-xs text-white/30">
-        <span>© 2025 Shree DSB Solar, Bikaner. All rights reserved.</span>
-        <span>Y67, Sudarshana Nagar, Bikaner, Rajasthan 334001</span>
+      {/* Bottom bar */}
+      <div className="border-t border-white/8">
+        <div className="mx-auto max-w-[1300px] px-6 md:px-10 py-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/35">
+          <p>© 2026 DSB Solar. All rights reserved.</p>
+          <div className="flex gap-5">
+            <a href="#" className="hover:text-white/60 transition-colors">Privacy Policy</a>
+            <a href="#" className="hover:text-white/60 transition-colors">Terms of Service</a>
+          </div>
+        </div>
       </div>
     </footer>
   );
